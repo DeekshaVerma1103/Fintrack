@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - Fintrack</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="dashboard">
+  <aside class="sidebar">
+    <h2>Fintrack</h2>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="expenses.html">Expenses</a>
+      <a href="categories.html">Categories</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </aside>
+  <main class="main-content">
+    <h1>Settings</h1>
+    <button id="clear-data">Clear All Data</button>
+  </main>
+</div>
+<script>
+  document.getElementById('clear-data').addEventListener('click', () => {
+    if (confirm('Are you sure you want to clear all data?')) {
+      localStorage.clear();
+      alert('All data has been cleared.');
+      window.location.reload();
+    }
+  });
+</script>
+</body>
+
+</html>
