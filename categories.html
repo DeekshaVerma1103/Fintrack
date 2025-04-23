@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories - Fintrack</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="dashboard">
+  <aside class="sidebar">
+    <h2>Fintrack</h2>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="expenses.html">Expenses</a>
+      <a href="categories.html">Categories</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </aside>
+  <main class="main-content">
+    <h1>Manage Categories</h1>
+    <form id="category-form">
+      <input type="text" id="new-category" placeholder="New Category" required>
+      <button type="submit">Add Category</button>
+    </form>
+    <ul id="category-list"></ul>
+  </main>
+</div>
+<script>
+  const categoryForm = document.getElementById('category-form');
+  const categoryList = document.getElementById('category-list');
+
+  function renderCategories() {
+    const categories = JSON.parse(localStorage.getItem('categories')) || [];
+    categoryList.innerHTML = '';
+    categories.forEach(cat => {
+      const li = document.createElement('li');
+      li.textContent = cat;
+      categoryList.appendChild(li);
+    });
+  }
+
+  categoryForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const newCat = document.getElementById('new-category').value;
+    const categories = JSON.parse(localStorage.getItem('categories')) || [];
+    if (!categories.includes(newCat)) {
+      categories.push(newCat);
+      localStorage.setItem('categories', JSON.stringify(categories));
+      document.getElementById('new-category').value = '';
+      renderCategories();
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', renderCategories);
+</script>
+</body>
+
+</html>
