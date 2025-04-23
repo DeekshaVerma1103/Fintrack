@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expenses - Fintrack</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<div class="dashboard">
+  <aside class="sidebar">
+    <h2>Fintrack</h2>
+    <nav>
+      <a href="index.html">Dashboard</a>
+      <a href="expenses.html">Expenses</a>
+      <a href="categories.html">Categories</a>
+      <a href="settings.html">Settings</a>
+    </nav>
+  </aside>
+  <main class="main-content">
+    <h1>Add Expense</h1>
+    <form id="expense-form">
+      <input type="text" id="description" placeholder="Description" required>
+      <input type="number" id="amount" placeholder="Amount" required>
+      <input type="text" id="category" placeholder="Category" required>
+      <button type="submit">Add Expense</button>
+    </form>
+    <h2>All Expenses</h2>
+    <ul id="expense-list"></ul>
+  </main>
+</div>
+<script>
+  const form = document.getElementById('expense-form');
+  const list = document.getElementById('expense-list');
+
+  function renderExpenses() {
+    const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    list.innerHTML = '';
+    expenses.forEach(exp => {
+      const li = document.createElement('li');
+      li.textContent = `${exp.description} - ₹${exp.amount} (${exp.category})`;
+      list.appendChild(li);
+    });
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const description = document.getElementById('description').value;
+    const amount = parseFloat(document.getElementById('amount').value);
+    const category = document.getElementById('category').value;
+
+    const newExpense = { description, amount, category, date: new Date().toISOString() };
+    const expenses = JSON.parse(localStorage.getItem('expenses')) || [];
+    expenses.push(newExpense);
+    localStorage.setItem('expenses', JSON.stringify(expenses));
+    form.reset();
+    renderExpenses();
+  });
+
+  document.addEventListener('DOMContentLoaded', renderExpenses);
+</script>
+</body>
+
+</html>
